@@ -13,7 +13,8 @@ import {
   Heading,
   Flex,
   Spacer,
-  Box
+  Box,
+  Input
 } from '@chakra-ui/react'
 import { ButtonReveal } from "./ButtonReveal";
 
@@ -71,7 +72,8 @@ const onSubmit = useCallback( async (e : FormEvent<HTMLFormElement>) => {
       }}>
         <Flex padding={4} alignItems='center' justifyContent='space-evenly'>
         <label>Enter URL</label>
-        <input
+        <Input
+          id="url-input"
           value={inputUrl}
           onChange={(e) => {
             setInputUrl(e.target.value);
@@ -79,7 +81,7 @@ const onSubmit = useCallback( async (e : FormEvent<HTMLFormElement>) => {
           placeholder="www.my-super-long-url-here.com/12345"
         />
         { !isGenerating ? (
-        <Button type="submit">Generate</Button>) : (<Button
+        <Button id="submit-btn" type="submit">Generate</Button>) : (<Button
         isLoading
         colorScheme='blue'
       />)}
@@ -89,7 +91,7 @@ const onSubmit = useCallback( async (e : FormEvent<HTMLFormElement>) => {
       
       <Container>
         <Heading mt={4}> My Shortened URLs</Heading>
-      <List>
+      <List id="url-list">
         {urls.map((u) => (
           <ListItem key={u.id}>
           <Stack justifyContent='center' alignItems='center' direction='column' h='100px' p={4}>

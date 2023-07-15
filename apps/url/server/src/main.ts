@@ -1,16 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import shortenUrl from './utils/shortenUrl';
+import { shortenUrl } from './utils/shortenUrl';
+import { lookupUrl } from './utils/lookupUrl';
 
 // Mutable Application State
-
-/**
- * A map of Short URL IDs to full original URLs
- * http://localhost/s/123, http://example.com/...
- *
- * { 123 -> 'http://example.com/...' }
- */
-const urlmap: Record<number, string> = {};
 
 // App
 
@@ -20,9 +13,9 @@ app.use(cors());
 
 
 // Endpoints
-app.post('/api/shorten', (req, res) => {
+app.post('/api/shorten', async (req, res) => {
   const original = req.body.original;
-  const short = shortenUrl(original, urlmap);
+  const short = await shortenUrl(original);
 
   res.send({
     short: short,
@@ -30,9 +23,10 @@ app.post('/api/shorten', (req, res) => {
   });
 });
 
-app.get('/s/:id', (req, res) => {
+app.get('/s/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const original = urlmap[id];
+  const original = await lookupUrl(id);
+  console.log(original);
   res.redirect(original);
 });
 
