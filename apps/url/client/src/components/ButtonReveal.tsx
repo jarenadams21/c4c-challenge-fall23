@@ -31,9 +31,7 @@ export const ButtonReveal = (props: ButtonRevealProps) => {
         <>
         <Flex alignItems='center'>
         <Switch onChange={changeDisplay} id='url-switcher' />
-        <>
         <Link color={color} ml={4} isExternal href={props.original}> Visit  {currentDisplayName}</Link>
-        </>
         </Flex>
         <Button width='80%' color={color}>{currentDisplay}</Button>
         
