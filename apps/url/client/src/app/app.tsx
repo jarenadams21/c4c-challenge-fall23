@@ -2,6 +2,7 @@ import { Container, Heading, List, ListItem, Stack } from '@chakra-ui/react';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { ButtonReveal } from '../components/ButtonReveal';
+import { UrlList } from '../components/UrlList';
 import { UrlShortenerForm } from '../components/UrlShortenerForm';
 import { Shortened } from '../schema/urlData';
 import verifyShortResponse from '../utils/verifyShortResponse';
@@ -49,15 +50,7 @@ export function App() {
       <Heading mt={4} mb={4}>My URL Shortener</Heading>
       <UrlShortenerForm requestShortUrl={requestShortUrl}/>
       <Heading mt={4}> My Shortened URLs</Heading>
-      <List id="url-list">
-        {urls.map((u) => (
-          <ListItem key={u.id}>
-          <Stack justifyContent='center' alignItems='center' direction='column' h='100px' p={4}>
-          <ButtonReveal short={u.short} original={u.original}/>
-          </Stack>
-          </ListItem>
-        ))}
-          </List>
+      <UrlList urls={urls}/>
       </Container>
     </div>
   );
