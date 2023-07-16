@@ -1,4 +1,4 @@
-import { Button, Text } from "@chakra-ui/react"
+import { Button, Switch, Text, Flex, Link } from "@chakra-ui/react"
 import { useState } from 'react'
 
 interface ButtonRevealProps {
@@ -29,8 +29,14 @@ export const ButtonReveal = (props: ButtonRevealProps) => {
     // Render
     return (
         <>
-        <Text> {currentDisplayName} </Text>
-        <Button width='80%' color={color} onClick={changeDisplay}>{currentDisplay}</Button>
+        <Flex alignItems='center'>
+        <Switch onChange={changeDisplay} id='url-switcher' />
+        <>
+        <Link color={color} ml={4} isExternal href={props.original}> Visit  {currentDisplayName}</Link>
+        </>
+        </Flex>
+        <Button width='80%' color={color}>{currentDisplay}</Button>
+        
         </>
     )
 }
