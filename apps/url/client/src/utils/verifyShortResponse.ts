@@ -1,5 +1,7 @@
 import { Shortened } from "../schema/urlData";
 
+// Ensures the object received from the server is in 
+// a valid 'Shortened' form
 export default function verifyShortResponse(newUrlFromService: any, id: number): Shortened | undefined {
 
     let newUrl: Shortened | undefined = undefined;
@@ -13,6 +15,5 @@ export default function verifyShortResponse(newUrlFromService: any, id: number):
           short: newUrlFromService.short,
         }
     }
-    console.log(newUrl)
     return newUrl;
 }

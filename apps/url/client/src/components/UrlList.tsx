@@ -2,6 +2,7 @@ import { Shortened } from "../schema/urlData";
 import { List, ListItem, Stack} from '@chakra-ui/react'
 import { ButtonReveal } from "./ButtonReveal";
 
+// UrlList props
 type UrlListProps = {
     urls: Array<Shortened>;
 }

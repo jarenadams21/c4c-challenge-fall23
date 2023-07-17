@@ -1,7 +1,4 @@
 import React, { useState, useCallback, FormEvent} from "react";
-import { Shortened } from "../schema/urlData";
-import axios from "axios";
-import verifyShortResponse from "../utils/verifyShortResponse";
 import isValidUrl from "../utils/isValidUrl";
 import {
   Button,
@@ -9,6 +6,7 @@ import {
   Input
 } from '@chakra-ui/react'
 
+// UrlShortenerForm props
 type ShortenUrlFormProps = {
   requestShortUrl: (original: string) => Promise<void>;
 }
@@ -46,7 +44,7 @@ const onSubmit = useCallback( async (e : FormEvent) => {
           placeholder="www.my-super-long-url-here.com/12345"
         />
         { !isGenerating ? (
-        <Button id="submit-btn" type="submit">Generate</Button>) : (<Button
+        <Button ml={4} id="submit-btn" type="submit">Generate</Button>) : (<Button
         isLoading
         colorScheme='blue'
       />)}

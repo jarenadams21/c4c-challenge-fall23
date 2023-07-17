@@ -1,7 +1,6 @@
-import { Container, Heading, List, ListItem, Stack } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, CloseButton, Container, Heading } from '@chakra-ui/react';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
-import { ButtonReveal } from '../components/ButtonReveal';
 import { UrlList } from '../components/UrlList';
 import { UrlShortenerForm } from '../components/UrlShortenerForm';
 import { Shortened } from '../schema/urlData';
@@ -10,6 +9,7 @@ import verifyShortResponse from '../utils/verifyShortResponse';
 export function App() {
   // State
   const [urls, setUrls] = useState<Array<Shortened>>([]);
+  const [info, showInfo] = useState('50%');
   
   // Callback definition
   const requestShortUrl = useCallback(
@@ -46,6 +46,23 @@ export function App() {
   // Render
   return (
     <div className="app">
+    <Alert width={info} status='info'  alignItems='center'>
+    <AlertIcon alignSelf='center' onClick={ () => showInfo('50%')} />
+    { info === '50%' && ( <>
+    <AlertDescription>
+    Small URLs only work when the server for this application is running!
+    </AlertDescription>
+    <CloseButton
+        alignSelf='flex-start'
+        position='relative'
+        right={-1}
+        top={-1}
+        onClick={ () => showInfo('5%')}
+      />
+      </>
+    )
+    }
+  </Alert>
       <Container maxWidth="4xl" marginBlock={10} textAlign="center">
       <Heading mt={4} mb={4}>My URL Shortener</Heading>
       <UrlShortenerForm requestShortUrl={requestShortUrl}/>

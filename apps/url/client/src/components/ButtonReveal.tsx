@@ -1,6 +1,7 @@
 import { Button, Switch, Text, Flex, Link } from "@chakra-ui/react"
 import { useState } from 'react'
 
+// ButtonReveal props
 interface ButtonRevealProps {
     short: string,
     original: string
@@ -27,13 +28,14 @@ export const ButtonReveal = (props: ButtonRevealProps) => {
     }
 
     // Render
+    /* Rel='noreferrer' as I am not trying to boost analytics*/
     return (
         <>
         <Flex alignItems='center'>
         <Switch onChange={changeDisplay} id='url-switcher' />
-        <Link color={color} ml={4} isExternal href={props.original}> Visit  {currentDisplayName}</Link>
+        <Text color={color} ml={4}> {currentDisplayName} URL</Text>
         </Flex>
-        <a href={props.original} target='_blank'>
+        <a rel='noreferrer' href={props.original} target='_blank'>
         <Button width='100%' color={color}>{currentDisplay}</Button>
         </a>
         </>
