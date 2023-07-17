@@ -9,7 +9,7 @@ export const AppInfo = () => {
         <AlertIcon alignSelf='center' onClick={ () => showInfo('50%')} />
         { info === '50%' && ( <>
         <AlertDescription>
-        Small URLs only work when the server for this application is running!
+        Small URLs only work when the server for this application is running! If you delete a URL, make sure to refresh the page (I had trouble with the list state!)
         </AlertDescription>
         <CloseButton
             alignSelf='flex-start'

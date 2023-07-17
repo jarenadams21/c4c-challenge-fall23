@@ -6,7 +6,8 @@ import { Shortened } from "../schema/urlData"
 
 // ButtonReveal props
 interface ButtonRevealProps {
-    url: Shortened
+    url: Shortened,
+    setChange: any
 }
 
 export const ButtonReveal = (props: ButtonRevealProps) => {
