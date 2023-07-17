@@ -7,6 +7,5 @@ export async function lookupUrl(shortenedId: number) {
       'SELECT original FROM url WHERE id = (?)',
       shortenedId
     );
-    console.log(result);
     return result.original;
   }

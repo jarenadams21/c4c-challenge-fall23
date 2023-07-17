@@ -14,7 +14,7 @@ export const UrlList: React.FC<UrlListProps> = ({urls}) => {
         {urls.map((u) => (
           <ListItem key={u.id}>
           <Stack justifyContent='center' alignItems='center' direction='column' h='100px' p={4}>
-          <ButtonReveal short={u.short} original={u.original}/>
+          <ButtonReveal url={u}/>
           </Stack>
           </ListItem>
         ))}

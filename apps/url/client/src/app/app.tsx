@@ -1,6 +1,7 @@
-import { Alert, AlertDescription, AlertIcon, CloseButton, Container, Heading } from '@chakra-ui/react';
+import { Container, Heading } from '@chakra-ui/react';
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { AppInfo } from '../components/AppInfo';
 import { UrlList } from '../components/UrlList';
 import { UrlShortenerForm } from '../components/UrlShortenerForm';
 import { Shortened } from '../schema/urlData';
@@ -9,7 +10,28 @@ import verifyShortResponse from '../utils/verifyShortResponse';
 export function App() {
   // State
   const [urls, setUrls] = useState<Array<Shortened>>([]);
-  const [info, showInfo] = useState('50%');
+  const [isGrabbing, setIsGrabbing] = useState(false);
+
+  useEffect(() => {
+    setUrls([]);
+    async function grabUrls() {
+      setIsGrabbing(true);
+      const shortenedUrls = await axios.get(`http://localhost:3333/api/getAllUrls`);
+      const urlArray = shortenedUrls.data.urls as Array<Shortened>;
+      urlArray.forEach( (url) => {
+          const insertion : Shortened = {
+            id: url.id,
+            original: url.original,
+            short: `http://localhost:3333/s/${url.id}`
+          }
+          // Tricky, refer here: https://legacy.reactjs.org/docs/hooks-reference.html#usestate
+          setUrls((urls) => [...urls, insertion]);
+      })
+
+      setIsGrabbing(false);
+    }
+    grabUrls();
+  }, []);
   
   // Callback definition
   const requestShortUrl = useCallback(
@@ -26,48 +48,32 @@ export function App() {
       const newUrl = response.data as Shortened; // 🚨 This should set off alarm bells in your head! Why?
       */ 
      const newUrlFromService = response.data;
-  
      try { 
-  
-      const newUrl: Shortened | undefined = verifyShortResponse(newUrlFromService, urls.length);
+      const newUrl: Shortened | undefined = verifyShortResponse(newUrlFromService);
   
       if(newUrl) {
       setUrls([...urls,newUrl])
-        } else {
+
+        }
+         else {
           throw new Error('The following is not a valid shortened url query & response ->> Original: ' + newUrlFromService.original + 
           ', Short: ' + newUrlFromService.short)
+
         }
      } catch ( error ) {
         throw new Error('failed to shorten the url, this indicates that the original or short field is missing from the service response.');
       }
   }, [urls, setUrls]);
   
-
   // Render
   return (
     <div className="app">
-    <Alert width={info} status='info'  alignItems='center'>
-    <AlertIcon alignSelf='center' onClick={ () => showInfo('50%')} />
-    { info === '50%' && ( <>
-    <AlertDescription>
-    Small URLs only work when the server for this application is running!
-    </AlertDescription>
-    <CloseButton
-        alignSelf='flex-start'
-        position='relative'
-        right={-1}
-        top={-1}
-        onClick={ () => showInfo('5%')}
-      />
-      </>
-    )
-    }
-  </Alert>
+      <AppInfo/>
       <Container maxWidth="4xl" marginBlock={10} textAlign="center">
       <Heading mt={4} mb={4}>My URL Shortener</Heading>
       <UrlShortenerForm requestShortUrl={requestShortUrl}/>
       <Heading mt={4}> My Shortened URLs</Heading>
-      <UrlList urls={urls}/>
+      { !isGrabbing && <UrlList urls={urls}/>}
       </Container>
     </div>
   );

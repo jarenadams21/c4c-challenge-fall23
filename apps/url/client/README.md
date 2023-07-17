@@ -1,4 +1,5 @@
 # Url Shortener Frontend
+! I removed React strict mode because it was causing duplicate renders in my URL list, and im done with development.
 
 ## Install
 yarn global add nx@latest
@@ -12,7 +13,6 @@ nx serve url-client
 - React
 - Axios
 - Chakra UI
-- SQLite
 
 ### Types:
 - Shortened
@@ -33,5 +33,7 @@ nx serve url-client
     ->> Displays a list of ButtonReveal components using their client-side defined ids as keys for rendering
 - UrlShortenerForm
     ->> A form that prompts a long url entry, and once submitted with the generate button, appends to the UrlList after making an axios call to the service to shorten the submitted long url.
+- AppInfo
+    ->> Conditional tooltip for helpful information about url shortener
 
 

@@ -20,7 +20,7 @@ const onSubmit = useCallback( async (e : FormEvent) => {
     e.preventDefault();
     await requestShortUrl(inputUrl);
     setIsGenerating(true);
-    setTimeout(() => setIsGenerating(false), 300);
+    setTimeout(() => setIsGenerating(false), 500);
     setInputUrl('');
 }, [inputUrl, setInputUrl, requestShortUrl]);
 

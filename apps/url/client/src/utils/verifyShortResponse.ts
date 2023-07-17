@@ -2,7 +2,8 @@ import { Shortened } from "../schema/urlData";
 
 // Ensures the object received from the server is in 
 // a valid 'Shortened' form
-export default function verifyShortResponse(newUrlFromService: any, id: number): Shortened | undefined {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function verifyShortResponse(newUrlFromService: any): Shortened | undefined {
 
     let newUrl: Shortened | undefined = undefined;
     if(newUrlFromService.original.length > 0 
@@ -10,7 +11,7 @@ export default function verifyShortResponse(newUrlFromService: any, id: number):
         && newUrlFromService.original.length > newUrlFromService.short.length) {
   
          newUrl = {
-          id: id,
+          id: newUrlFromService.id,
           original: newUrlFromService.original,
           short: newUrlFromService.short,
         }
